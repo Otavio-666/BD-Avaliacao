@@ -5,8 +5,6 @@ FROM resultados_corrida r
 RIGHT JOIN pilotos p ON r.piloto_id = p.id AND r.gp = 'GP de Interlagos';
 
 2. Todos os fabricantes de motor e a quantidade de pilotos (usando só RIGHT JOIN):
-Encadeando as tabelas da direita para a esquerda para manter os fabricantes sem equipe (como a
-Audi) e contando os pilotos:
 
 SELECT fm.nome AS fabricante, COUNT(p.id) AS qtd_pilotos
 FROM pilotos p
@@ -16,8 +14,6 @@ GROUP BY fm.id, fm.nome
 ORDER BY qtd_pilotos DESC;
 
 3. Equipes irregulares sem fabricante de motor válido (com RIGHT JOIN):
-Puxando todas as equipes da direita e filtrando onde o ID do fabricante ficou nulo (pega a Sauber
-com NULL e a Andretti com ID 99 ):
 
 SELECT e.id, e.nome, e.motor_id
 FROM fabricantes_motor fm
@@ -35,11 +31,10 @@ RIGHT JOIN pilotos p ON e.id = p.equipe_id;
 
 
 
-Traz todos os 6 pilotos cadastrados na tabela pilotos , acompanhados da equipe e do fabricante de motor quando existem. 
-Como há dois RIGHT JOIN seguidos, a tabela final da direita ( pilotos ) prevalece. 
-Assim, Franco Colapinto (equipe 77 inexistente) e  Rubens Barrichello (equipe NULL ) aparecem com equipe e fabricante nulos; 
-Gabriel Bortoleto aparece com a Sauber, mas fabricante nulo. 
-Equipes sem piloto (Haas, Andretti) e motores sem equipe (Audi) ficam de fora.
+Mostra todos os 6 pilotos cadastrados, junto com a equipe e o motor deles, se tiverem. 
+Como usamos dois RIGHT JOIN seguidos, quem manda no resultado final é a última tabela da direita (pilotos). 
+Por causa disso, o Franco Colapinto (equipe 77, que não existe) e o Rubens Barrichello (equipe NULL) aparecem com equipe e motor vazios. 
+Já o Gabriel Bortoleto vem com a Sauber, mas sem fabricante. As equipes sem piloto (Haas e Andretti) e motores sem equipe (Audi) acabam ficando de fora.
 
 
 ____________________________________________________________________________________
@@ -50,8 +45,8 @@ WHERE r.gp = 'GP de Interlagos';
 
 
 
-Traz apenas os 3 pilotos que correram no GP de Interlagos (Charles Leclerc, Max Verstappen e Franco Colapinto). 
-o filtro WHERE r.gp = 'GP de Interlagos' é aplicado depois da junção, descartando quem ficou com GP nulo ou correu em outro circuito (como Lando Norris em Monza)
+Retorna só os 3 pilotos que correram em Interlagos (Charles Leclerc, Max Verstappen e Franco Colapinto). 
+Como o WHERE r.gp = 'GP de Interlagos' roda depois de juntar as tabelas, ele acaba cortando fora quem estava com o GP nulo ou quem só correu em outra pista (como o Lando Norris em Monza).
 ____________________________________________________________________________________
 c) SELECT e.nome AS equipe
 FROM pilotos p
@@ -60,7 +55,5 @@ WHERE p.id IS NULL;
 
 
 
-Retorna apenas as equipes que não possuem nenhum piloto cadastrado: Haas F1 Team e
-Andretti Cadillac. 
-O RIGHT JOIN mantém todas as equipes e o filtro WHERE p.id IS NULL
-seleciona exatamente aquelas que não encontraram correspondência na tabela pilotos .
+Traz apenas as equipes que ainda não têm nenhum piloto cadastrado: Haas F1 Team e Andretti Cadillac.
+O RIGHT JOIN segura todas as equipes da tabela e o WHERE p.id IS NULL filtra exatamente as que não bateram com ninguém na tabela pilotos.
