@@ -1,0 +1,4 @@
+1 ). Procure todos os papeis que Maria da Silva já interpretou e informe qual e seu nome artistico.
+2 ).Consulte em que filmes o ator Jim Carrey já participou e qual papel interpretou.
+3).Na Data-base ‘consulta’ procure as consultas que ocorrem durante abril de 2025, mostrando o
+nome do paciente do medico e a data.

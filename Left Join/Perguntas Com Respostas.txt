@@ -1,0 +1,32 @@
+1- O que left join faz?
+Traz todos os registros da tabela da esquerda e só os que combinam da tabela da direita. Se não tiver nada correspondendo na direita, ele preenche com NULL mesmo e segue o jogo.
+
+2- Quais são as vantagens e desvantagens de usar o left join?
+Vantagem: Mostra tudo da tabela principal (esquerda) mesmo que o outro lado esteja vazio.
+Desvantagem: Enche a consulta de valores NULL quando não tem correspondência e pode ficar meio lento em tabelas gigantes.
+
+3- Faça um código para mostrar os dados dos clientes.
+SELECT * FROM cliente;
+
+4- Liste todos os clientes em ordem crescente de valor de compra.
+SELECT c.nome, l.valor
+FROM cliente c
+LEFT JOIN loja l ON c.id_cliente = l.id_cliente
+ORDER BY l.valor ASC;
+
+5- Ordene alfabeticamente todos os clientes.
+SELECT * FROM cliente ORDER BY nome ASC;
+
+6- Mostre quem fez a compra mais caras.
+SELECT c.nome, l.valor
+FROM cliente c
+LEFT JOIN loja l ON c.id_cliente = l.id_cliente
+ORDER BY l.valor DESC
+LIMIT 1;
+
+7- Mostre os clientes mais velhos.
+SELECT * FROM cliente ORDER BY idade DESC;
+
+8- Qual a diferença do left join e o inner join?
+O LEFT JOIN traz todo mundo da tabela da esquerda e o que combinar da direita (botando NULL onde não tem). 
+Já o INNER JOIN só traz o que tem em comum nas duas tabelas e corta o resto fora.
